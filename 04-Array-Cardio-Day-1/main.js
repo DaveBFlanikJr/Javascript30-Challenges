@@ -44,6 +44,8 @@ console.log(fullName);
 
 const ordered = inventors.sort((a,b) => a.year > b.year ? 1 : -1 );
   console.table(ordered);
+  // Why 1 and -1? When sort iterates over the array it will move it up by 1 or down by 1 after comparing the two years.
+  // So the function will go through each object in the array, move them up or down until each is in the proper spot
 
 // Array.prototype.reduce()
 // 4. How many years did all the inventors live all together?
@@ -76,13 +78,36 @@ console.table(oldest);
 // 6. create a list of Boulevards in Paris that contain 'de' anywhere in the name
 // https://en.wikipedia.org/wiki/Category:Boulevards_in_Paris
 
+// const category =  document.querySelector('.mw-category'); // we have to target the dom to get this info.. So use the dev tool to target the class contaning the info we need
+// const links = Array.from(category.querySelectorAll('a')); // this will give you a nodelist of a tags (links)
+// // Array.from will convert nodelist => array so we can use .map
+
+// const de = links
+//               .map(link => link.textContent)
+//               .filter(streetName => streetName.includes('de'));
+
 
 // 7. sort Exercise
 // Sort the people alphabetically by last name
-const alphabetically = alphabetically.sort(last => {
-
-})
+const alpha = people.sort((lastOne, nextOne)  => {
+  const [aLast, aFirst] = lastOne.split(', '); // going to split on a comma and space in order to just get the last name
+  const [bLast, bFirst] = nextOne.split(', ');
+  return aLast > bLast ? 1 : -1;
+});
+  console.table(alpha);
 
 // 8. Reduce Exercise
 // Sum up the instances of each of these
 const data = ['car', 'car', 'truck', 'truck', 'bike', 'walk', 'car', 'van', 'bike', 'walk', 'car', 'van', 'car', 'truck' ];
+
+const transportation = data.reduce((obj, item) =>{
+  if(!obj[item]) {
+    obj[item] = 0;
+  }
+  obj[item]++;
+  return obj;
+}, {}) // start with a black object (we are using reduce)
+  // Then we loop over and see if there is a 0 (for obj)
+  // if there is we incriment by one and then repeate until all objects are covered
+  // if there isnt an obj its created if there was already one in increments by 1 (so 1=> cars...)
+console.log(transportation);
